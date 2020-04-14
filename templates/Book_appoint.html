@@ -52,7 +52,7 @@
                             <div class="main-menu  d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a class="active" href="index.html">Home</a></li>
+                                        <li><a class="active" href="{% url 'index' %}">Home</a></li>
                                         <!-- only for docs
                                         <li><a class="active" href="Leave.html">Leaves</a></li>
                                         -->
@@ -61,15 +61,6 @@
 
                                     </ul>
                                 </nav>
-                            </div>
-                        </div>
-                        <!-- For employees only.-->
-                        <div class="col-xl-3 col-lg-3 d-none d-lg-block">
-                            <div class="Appointment">
-                                <div class="book_btn d-none d-lg-block">
-                                    <!--for employees-->
-                                    <a class="popup-with-form" href="#test-form">Book an Appointment</a>
-                                </div>
                             </div>
                         </div>
                         <div class="col-12">
@@ -113,39 +104,51 @@
 			<!--Start Form-->
 			<div class="section-top-border">
 				<div class="row">
-					<div class="col-lg-8 col-md-8">
-						<form action="book" method="POST">
+                    <form action="book" method="POST">
 
-							<div class="single-element-widget mt-30">
-								<div class="default-select" id="default-select"">
-									<select>
-										<option value="0">Ortho</option>
-										<option value="1">ENT</option>
-									</select>
-								</div>
-							</div>
+                        <div class="single-element-widget mt-30">
+                            <h3 class="mb-30">Speciality</h3>
+                            <div class="default-select" id="default-select"">
+                            <select>
+                                <option value="0">Ortho</option>
+                                <option value="1">ENT</option>
+                            </select>
+                        </div>
 
-							<div class="single-element-widget mt-30">
-								<div class="default-select" id="default-select"">
-									<select>
-										<option value="0">Arooshi Verma</option>
-										<option value="1">Av</option>
-									</select>
-								</div>
-							</div>
+                        <div class="single-element-widget mt-30">
+                            <h3 class="mb-30">Doctor Name</h3>
+                            <div class="default-select" id="default-select"">
+                                <select>
+                                    <option value="0">Arooshi Verma</option>
+                                    <option value="1">Av</option>
+                                </select>
+                            </div>
+                        </div>
 
-							<div class="single-element-widget mt-30">
-								<div class="default-select" id="default-select"">
-									<select>
-										<option value="0">9:00 - 10:00</option>
-										<option value="1">11:00 - 12:00</option>
-									</select>
-								</div>
-							</div>
-							<br>
-							<div class="button-group-area mt-40">
-								<input class="genric-btn info circle" type="submit" value="Book">
-							</div>
+                        <div class="single-element-widget mt-30">
+                            <h3 class="mb-30">Timing</h3>
+                            <div class="default-select" id="default-select"">
+                                <select>
+                                    <option value="0">9:00 - 10:00</option>
+                                    <option value="1">11:00 - 12:00</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="single-element-widget mt-30">
+                            <h3 class="mb-30">Patient Name</h3>
+                            <div class="default-select" id="default-select"">
+                                <select>
+                                    <option value="0">G Verma</option>
+                                    <option value="1">S Verma</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="button-group-area mt-40">
+                            <input class="genric-btn info circle" type="submit" value="Book">
+                        </div>
 
 
 						</form>

@@ -57,7 +57,7 @@
                                         <!-- only for docs
                                         <li><a class="active" href="Leave.html">Leaves</a></li>
                                         -->
-                                        <li><a href="Login.html">Login</a></li>
+                                        <li><a href="{% url 'login'  %}">Login</a></li>
                                         <li><a href="{%static 'doctors.html' %}">Logout</a></li>
 
                                     </ul>
@@ -69,7 +69,7 @@
                             <div class="Appointment">
                                 <div class="book_btn d-none d-lg-block">
                                     <!--for employees-->
-                                    <a class="popup-with-form" href="#test-form">Book an Appointment</a>
+                                    <a href="{% url 'book_appoint' %}">Book an Appointment</a>
                                 </div>
                             </div>
                         </div>
