@@ -44,7 +44,7 @@
                     <div class="row align-items-center">
                         <div class="col-xl-3 col-lg-2">
                             <div class="logo">
-                                <a href="index.html">
+                                <a href="{% url 'index' %}">
                                     <img src= "{%static "img/logo.png" %}" alt="">
                                 </a>
                             </div>
@@ -53,12 +53,13 @@
                             <div class="main-menu  d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a class="active" href="index.html">Home</a></li>
+                                        <li><a class="active" href="{% url 'index'  %}">Home</a></li>
                                         <!-- only for docs
                                         <li><a class="active" href="Leave.html">Leaves</a></li>
                                         -->
                                         <li><a href="{% url 'login'  %}">Login</a></li>
-                                        <li><a href="{%static 'doctors.html' %}">Logout</a></li>
+                                        <li><a href="{%url 'index' %}">Logout</a></li>
+                                        <li><a href={% url 'register'  %}>Register</a></li>
 
                                     </ul>
                                 </nav>

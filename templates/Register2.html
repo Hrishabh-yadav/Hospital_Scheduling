@@ -30,10 +30,7 @@
     <!-- <link rel="stylesheet" href=" {% static 'css/responsive.css' %}"> -->
 </head>
 
-<body>
-    <!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
+<body bgcolor="#F3FEFF">
     <!-- header-start -->
     {% load static %}
     <header>
@@ -53,12 +50,6 @@
                                 <nav>
                                     <ul id="navigation">
                                         <li><a class="active" href="{% url 'index' %}">Home</a></li>
-                                        <!-- only for docs
-                                        <li><a class="active" href="Leave.html">Leaves</a></li>
-                                        -->
-                                        <li><a href="{% url 'login'  %}">Login</a></li>
-                                        <li><a href="{%static 'doctors.html' %}">Logout</a></li>
-
                                     </ul>
                                 </nav>
                             </div>
@@ -76,90 +67,39 @@
 	<div class="whole-wrap">
 		<div class="container box_1170">
 			<div class="section-top-border">
-				<h3 class="mb-30"><center> PRESENT SCHEDULE </center></h3>
-				<div class="progress-table-wrap">
-					<div class="progress-table">
-						<div class="table-head">
-							<div class="serial">Speciality</div>
-							<div class="serial">Doctor Name</div>
-							<div class="serial">Day1</div>
-							<div class="serial">Day2</div>
-							<div class="serial">Day3</div>
-							<div class="serial">Day4</div>
-							<div class="serial">Day5</div>
-							<div class="serial">Day6</div>
-							<div class="serial">Day7</div>
-						</div>
-						<div class="table-row">
-							<div class="serial">01</div>
-
-							<div class="serial">Arooshi</div>
-
-
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!--Start Form-->
-			<div class="section-top-border">
 				<div class="row">
-                    <form action="book" method="POST">
-
-                        <div class="single-element-widget mt-30">
-                            <h3 class="mb-30">Speciality</h3>
-                            <div class="default-select" id="default-select"">
-                            <select>
-                                <option value="0">Ortho</option>
-                                <option value="1">ENT</option>
-                            </select>
-                        </div>
-
-                        <div class="single-element-widget mt-30">
-                            <h3 class="mb-30">Doctor Name</h3>
-                            <div class="default-select" id="default-select"">
-                                <select>
-                                    <option value="0">Arooshi Verma</option>
-                                    <option value="1">Av</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="single-element-widget mt-30">
-                            <h3 class="mb-30">Timing</h3>
-                            <div class="default-select" id="default-select"">
-                                <select>
-                                    <option value="0">9:00 - 10:00</option>
-                                    <option value="1">11:00 - 12:00</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="single-element-widget mt-30">
-                            <h3 class="mb-30">Patient Name</h3>
-                            <div class="default-select" id="default-select"">
-                                <select>
-                                    <option value="0">G Verma</option>
-                                    <option value="1">S Verma</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <br>
-                        <div class="button-group-area mt-40">
-                            <input class="genric-btn info circle" type="submit" value="Book">
-                        </div>
+					<div class="col-lg-8 col-md-8">
+						<h3 class="mb-30">REGISTER</h3><br><br>
+                        <h3 class="mb-30">Step - 2</h3>
+						<form action="{% url 'login' %}" method="POST">
+							<div class="mt-10">
+								<input type="number" name="otp" placeholder="OTP"
+									onfocus="this.placeholder = ''" onblur="this.placeholder = 'OTP'" required
+									class="single-input">
+							</div>
+							<div class="mt-10">
+								<input type="password" name="password1" placeholder="PASSWORD"
+									onfocus="this.placeholder = ''" onblur="this.placeholder = 'PASSWORD'" required
+									class="single-input">
+							</div>
+                            <div class="mt-10">
+								<input type="password" name="password2" placeholder="CONFIRM PASSWORD"
+									onfocus="this.placeholder = ''" onblur="this.placeholder = 'CONFIRM PASSWORD'" required
+									class="single-input">
+							</div>
+							<div class="mt-10">
+								<input type="submit" value="REGISTER">
+							</div>
 
 
 						</form>
 					</div>
 				</div>
 			</div>
-			<!--End Form-->
 		</div>
 	</div>
-	<!-- End Align Area -->
- <!-- JS here -->
+
+<!-- JS here -->
     {% block extrascripts %}
     <script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
     <script src="{% static 'js/vendor/jquery-1.12.4.min.js' %}"></script>
@@ -207,5 +147,4 @@
     </script>
     {% endblock %}
 </body>
-
 </html>
