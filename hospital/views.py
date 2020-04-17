@@ -72,7 +72,7 @@ def register(request):
             user.is_active = False
             user.save()
             current_site = get_current_site(request)
-            mail_subject = 'Activate your blog account.'
+            mail_subject = 'Activate your hospital account.'
             message = render_to_string('acc_active_mail.html', {
                 'user': user,
                 'domain': current_site.domain,
