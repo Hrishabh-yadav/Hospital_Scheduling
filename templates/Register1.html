@@ -70,8 +70,8 @@
 				<div class="row">
 					<div class="col-lg-8 col-md-8">
 						<h3 class="mb-30">REGISTER</h3><br><br>
-                        <h3 class="mb-30">Step - 1</h3>
-						<form action="{% url 'register' %}" method="POST">
+						<form action="register" method="POST">
+                            {% csrf_token %}
 							<div class="mt-10">
 								<input type="text" name="empid" placeholder="Employee ID"
 									onfocus="this.placeholder = ''" onblur="this.placeholder = 'EMployee ID'" required
@@ -82,12 +82,27 @@
 									onfocus="this.placeholder = ''" onblur="this.placeholder = 'Company Email ID'" required
 									class="single-input">
 							</div>
+                            <div class="mt-10">
+								<input type="password" name="password1" placeholder="PASSWORD"
+									onfocus="this.placeholder = ''" onblur="this.placeholder = 'PASSWORD'" required
+									class="single-input">
+							</div>
+                            <div class="mt-10">
+								<input type="password" name="password2" placeholder="CONFIRM PASSWORD"
+									onfocus="this.placeholder = ''" onblur="this.placeholder = 'CONFIRM PASSWORD'" required
+									class="single-input">
+							</div>
 							<div class="mt-10">
-								<input type="submit" value="NEXT">
+								<input type="submit" value="REGISTER">
 							</div>
 
 
 						</form>
+
+                        <br><br><br>
+                        {% for message in messages %}
+                        <h3> {{ message }}</h3>
+                        {% endfor %}
 					</div>
 				</div>
 			</div>

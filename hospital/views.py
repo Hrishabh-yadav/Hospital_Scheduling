@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib import messages
 from django.http import HttpResponse
 
 
@@ -11,11 +12,15 @@ def login(request):
 
 
 def register(request):
-    return render(request, 'Register1.html')
+    if(request.method == 'POST'):
+        empid = request.POST('empid')
+        emailid = request.POST('emailid')
+        pass1 = request.POST('password1')
+        pass2 = request.POST('password2')
 
+    else:
+        return render(request, 'Register1.html')
 
-def register2(request):
-    return render(request, 'Register2.html')
 
 
 def book_appoint(request):
