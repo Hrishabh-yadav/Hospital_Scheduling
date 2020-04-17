@@ -57,9 +57,15 @@
                                         <!-- only for docs
                                         <li><a class="active" href="Leave.html">Leaves</a></li>
                                         -->
-                                        <li><a href="{% url 'login'  %}">Login</a></li>
-                                        <li><a href="{%url 'index' %}">Logout</a></li>
-                                        <li><a href={% url 'register'  %}>Register</a></li>
+                                        {% if user.is_authenticated  %}
+                                        <li>< Hello, {{ user.username }}></li>
+                                        <li><a href= {% url 'logout' %}>Logout</a></li>
+                                        {% else %}
+                                        <li><a href= {%  url 'login' %}>Login</a></li>
+                                         <li><a href={% url 'register'  %}>Register</a></li>
+                                        {% endif %}
+
+
 
                                     </ul>
                                 </nav>

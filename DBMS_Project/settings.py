@@ -29,6 +29,11 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'dbmsdjango@gmail.com'
+EMAIL_HOST_PASSWORD = 'hrish@2308'
+EMAIL_PORT = 587
 
 INSTALLED_APPS = [
     'hospital.apps.HospitalConfig',
@@ -79,8 +84,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'hospital_schedule',
-        'USER': 'postgres',
-        'PASSWORD': 'av123',
+        'USER': 'hrish',
+        'PASSWORD': 'hrish2308',
         'HOST': 'localhost'
     }
 }

@@ -77,6 +77,7 @@
 					<div class="col-lg-8 col-md-8">
 						<h3 class="mb-30">Login</h3>
 						<form action="login" method="POST">
+                            {% csrf_token %}
 							<div class="mt-10">
 								<input type="text" name="username" placeholder="username"
 									onfocus="this.placeholder = ''" onblur="this.placeholder = 'userame'" required
