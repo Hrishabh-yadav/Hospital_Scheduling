@@ -10,6 +10,9 @@ from django.contrib.auth.models import User, auth
 from django.core.mail import EmailMessage
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils import six
+from django.views.generic import ListView, CreateView, UpdateView
+from django.urls import reverse_lazy
+from .models import *
 
 class TokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
@@ -99,4 +102,5 @@ def logout( request ):
     return redirect('/')
 
 def book_appoint(request):
+
     return render(request, 'Book_appoint.html')
