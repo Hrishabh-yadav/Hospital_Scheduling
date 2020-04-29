@@ -109,12 +109,16 @@
 							<div class="serial">Shift-2(1300 - 1600)</div>
 							<div class="serial">Shift-3(1800 - 2100)</div>
 						</div>
-
+                        {% for item in query %}
 						<div class="table-row">
-							<div class="serial">1</div>
-							<div class="serial">Arooshi</div>
-						</div>
+							<div class="serial">{{ item.doc.dept.deptname }} </div>
+							<div class="serial"> {{ item.doc.docname }}</div>
 
+							<div class="serial"> {{ item.shift1 }}</div>
+							<div class="serial"> {{ item.shift2 }}</div>
+							<div class="serial"> {{ item.shift3 }}</div>
+						</div>
+                        {% endfor %}
 
 					</div>
 				</div>

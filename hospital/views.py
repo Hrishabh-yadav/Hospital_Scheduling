@@ -102,5 +102,7 @@ def logout( request ):
     return redirect('/')
 
 def book_appoint(request):
-
-    return render(request, 'Book_appoint.html')
+    query = Schedule.objects.all()
+    print(query)
+    context = {'query': query}
+    return render(request, 'Book_appoint.html', context)
