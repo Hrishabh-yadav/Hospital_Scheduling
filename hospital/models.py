@@ -31,7 +31,9 @@ class Doctor(models.Model):
 class Schedule(models.Model):
 
     day = models.CharField(max_length=5, choices=DAY_CHOICES)
-    time = models.TimeField();
+    shift1 = models.BooleanField();
+    shift2 = models.BooleanField();
+    shift3 = models.BooleanField();
     doc = models.ForeignKey("Doctor", on_delete=models.CASCADE)
 
 
