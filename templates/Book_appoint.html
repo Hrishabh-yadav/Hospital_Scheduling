@@ -79,13 +79,18 @@
             <!--Start Form-->
 			<div class="section-top-border">
 				<div class="row">
-                    <form action="book" method="POST">
-
+                    <form action="book_appoint" method="POST">
+                        {% csrf_token %}
                         <div class="single-element-widget mt-30">
                             <div class="default-select" id="default-select"">
-                            <select>
+                            <select name = "filter">
                                 <option value="0">Ortho</option>
-                                <option value="1">ENT</option>
+                                <option value="1">Gynaecology</option>
+                                <option value="2">ENT</option>
+                                <option value="3">Medicine</option>
+                                <option value="4">Psychology</option>
+                                <option value="5">Dermatology</option>
+
                             </select>
                         </div>
 

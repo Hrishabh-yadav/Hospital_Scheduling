@@ -103,6 +103,14 @@ def logout( request ):
 
 def book_appoint(request):
     query = Schedule.objects.all()
-    print(query)
     context = {'query': query}
-    return render(request, 'Book_appoint.html', context)
+    if request.method == 'POST':
+        print(request.POST)
+        dept = request.POST['filter']
+        if dept is not None:
+            query = Schedule.objects.filter(doc__dept__deptid=int(dept)+1)
+            context = {'query': query}
+            return render(request, 'Book_appoint.html', context)
+
+    else:
+        return render(request, 'Book_appoint.html', context)
