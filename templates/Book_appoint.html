@@ -115,8 +115,9 @@
 					<div class="progress-table">
 						<div class="table-head">
                             <div class="serial"> # </div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<div class="country">Speciality</div>
-							<div class="visit">Doctor Name</div>
+							<div class="country">Doctor Name</div>
 							<div class="visit">Shift-1(0800 - 1100)</div>
 							<div class="visit">Shift-2(1300 - 1600)</div>
 							<div class="visit">Shift-3(1800 - 2100)</div>
@@ -124,7 +125,8 @@
                         {% for item in query %}
 						<div class="table-row">
                             <div class="serial"> {{ forloop.counter }} </div>
-							<div class="visit">{{ item.doc.dept.deptname }} </div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<div class="country">{{ item.doc.dept.deptname }} </div>
 							<div class="country"> {{ item.doc.docname }}</div>
                             {% if item.shift1 == True %}
 							    <div class="visit"> Availaible </div>
@@ -149,17 +151,19 @@
 			</div>
 
             <!--Table number buttons-->
-            <div style="text-align: center;">
-            <div class="button-group-area mt-40">
-                <a href="#" class="genric-btn info circle arrow">1<span class="lnr lnr-arrow-right"></span></a>
-                <a href="#" class="genric-btn info circle arrow">2<span class="lnr lnr-arrow-right"></span></a>
-                <a href="#" class="genric-btn info circle arrow">3<span class="lnr lnr-arrow-right"></span></a>
-                <a href="#" class="genric-btn info circle arrow">4<span class="lnr lnr-arrow-right"></span></a>
-                <a href="#" class="genric-btn info circle arrow">5<span class="lnr lnr-arrow-right"></span></a>
-                <a href="#" class="genric-btn info circle arrow">6<span class="lnr lnr-arrow-right"></span></a>
-                <a href="#" class="genric-btn info circle arrow">7<span class="lnr lnr-arrow-right"></span></a>
-            </div>
-            </div>
+            <form action="filter_day" method="POST">
+                <div style="text-align: center;">
+                <div class="button-group-area mt-40">
+                    <input class="genric-btn info circle arrow" type="submit" value="D1">
+                    <input class="genric-btn info circle arrow" type="submit" value="D2">
+                    <input class="genric-btn info circle arrow" type="submit" value="D3">
+                    <input class="genric-btn info circle arrow" type="submit" value="D4">
+                    <input class="genric-btn info circle arrow" type="submit" value="D5">
+                    <input class="genric-btn info circle arrow" type="submit" value="D6">
+                    <input class="genric-btn info circle arrow" type="submit" value="D7">
+                </div>
+                </div>
+            </form>
 
 
 			<!--Start Form-->

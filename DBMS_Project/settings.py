@@ -84,8 +84,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'hospital_schedule',
-        'USER': 'hrish',
-        'PASSWORD': 'hrish2308',
+        'USER': 'postgres',
+        'PASSWORD': 'av123',
         'HOST': 'localhost'
     }
 }
