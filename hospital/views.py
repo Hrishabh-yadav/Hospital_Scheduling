@@ -13,7 +13,7 @@ from django.utils import six
 from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
 from .models import *
-
+import datetime
 class TokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
         return (
@@ -100,16 +100,26 @@ def register(request):
 def logout( request ):
     auth.logout(request)
     return redirect('/')
-
+DAY_CHOICES = [
+     'MON',
+     'TUES',
+     'WED',
+     'THURS',
+     'FRI',
+     'SAT',
+     'SUN'
+]
 def book_appoint(request):
-    query = Schedule.objects.all()
+    day1 = DAY_CHOICES[datetime.datetime.today().weekday()]
+    query = Schedule.objects.filter(day=day1)
     context = {'query': query}
     if request.method == 'POST':
-        print(request.POST)
         dept = request.POST['filter']
         if dept is not None:
-            query = Schedule.objects.filter(doc__dept__deptid=int(dept)+1)
+            query = Schedule.objects.filter(doc__dept__deptid=int(dept)+1, day=day1)
             context = {'query': query}
+            return render(request, 'Book_appoint.html', context)
+        else:
             return render(request, 'Book_appoint.html', context)
 
     else:
