@@ -13,16 +13,28 @@ from django.utils import six
 from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
 from .models import *
-import datetime
+from datetime import datetime, timedelta
+from django import template
+
+register = template.Library()
+
+@register.filter()
+def addDays(days):
+   newDate = datetime.today() + timedelta(days=days)
+   return newDate
+
+
 class TokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
         return (
-            six.text_type(user.pk) + six.text_type(timestamp) +
-            six.text_type(user.is_active)
+                six.text_type(user.pk) + six.text_type(timestamp) +
+                six.text_type(user.is_active)
         )
 
 
 account_activation_token = TokenGenerator()
+
+
 def activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
@@ -47,9 +59,9 @@ def login(request):
     if request.method == 'POST':
         username = request.POST["username"]
         password = request.POST["password"]
-        user = auth.authenticate(username = username, password = password)
+        user = auth.authenticate(username=username, password=password)
         if user is not None:
-            auth.login(request,user)
+            auth.login(request, user)
             return redirect("/")
         else:
             messages.info(request, "Password or Username invalid!")
@@ -59,7 +71,7 @@ def login(request):
 
 
 def register(request):
-    if(request.method == 'POST'):
+    if (request.method == 'POST'):
         employee_id = request.POST['empid']
         email = request.POST['emailid']
         password1 = request.POST['password1']
@@ -71,7 +83,7 @@ def register(request):
             if User.objects.filter(email=email).exists():
                 messages.info(request, 'Email already registered')
                 return redirect('register')
-            user = User.objects.create_user(username=employee_id, password= password1, email=email)
+            user = User.objects.create_user(username=employee_id, password=password1, email=email)
             user.is_active = False
             user.save()
             current_site = get_current_site(request)
@@ -97,26 +109,33 @@ def register(request):
     else:
         return render(request, 'Register1.html')
 
-def logout( request ):
+
+def logout(request):
     auth.logout(request)
     return redirect('/')
+
+
 DAY_CHOICES = [
-     'MON',
-     'TUES',
-     'WED',
-     'THURS',
-     'FRI',
-     'SAT',
-     'SUN'
+    'MON',
+    'TUES',
+    'WED',
+    'THURS',
+    'FRI',
+    'SAT',
+    'SUN'
 ]
-def book_appoint(request):
-    day1 = DAY_CHOICES[datetime.datetime.today().weekday()]
-    query = Schedule.objects.filter(day=day1)
+
+
+def book_appoint(request, days=0):
+    #day1 = DAY_CHOICES[datetime.datetime.today().weekday()]
+    dayx = addDays(days)
+    dayx = DAY_CHOICES[dayx.weekday()]
+    query = Schedule.objects.filter(day=dayx)
     context = {'query': query}
     if request.method == 'POST':
         dept = request.POST['filter']
         if dept is not None:
-            query = Schedule.objects.filter(doc__dept__deptid=int(dept)+1, day=day1)
+            query = Schedule.objects.filter(doc__dept__deptid=int(dept) + 1, day=dayx)
             context = {'query': query}
             return render(request, 'Book_appoint.html', context)
         else:
@@ -124,3 +143,27 @@ def book_appoint(request):
 
     else:
         return render(request, 'Book_appoint.html', context)
+
+
+def filter_d2(request):
+    return book_appoint(request, 1)
+
+
+def filter_d3(request):
+    return book_appoint(request, 2)
+
+
+def filter_d4(request):
+    return book_appoint(request, 3)
+
+
+def filter_d5(request):
+    return book_appoint(request, 4)
+
+
+def filter_d6(request):
+    return book_appoint(request, 5)
+
+
+def filter_d7(request):
+    return book_appoint(request, 1)

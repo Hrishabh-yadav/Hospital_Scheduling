@@ -151,19 +151,17 @@
 			</div>
 
             <!--Table number buttons-->
-            <form action="filter_day" method="POST">
-                <div style="text-align: center;">
-                <div class="button-group-area mt-40">
-                    <input class="genric-btn info circle arrow" type="submit" value="D1">
-                    <input class="genric-btn info circle arrow" type="submit" value="D2">
-                    <input class="genric-btn info circle arrow" type="submit" value="D3">
-                    <input class="genric-btn info circle arrow" type="submit" value="D4">
-                    <input class="genric-btn info circle arrow" type="submit" value="D5">
-                    <input class="genric-btn info circle arrow" type="submit" value="D6">
-                    <input class="genric-btn info circle arrow" type="submit" value="D7">
+            <div style="text-align: center;">
+                <div class="button-group-area mt-10">
+                    <a href="{% url 'filter_d1' %}" class="genric-btn info-border circle">Info</a>
+                    <a href="{% url 'filter_d2' %}" class="genric-btn info-border circle">Info</a>
+                    <a href="{% url 'filter_d3' %}" class="genric-btn info-border circle">Info</a>
+                    <a href="{% url 'filter_d4' %}" class="genric-btn info-border circle">Info</a>
+                    <a href="{% url 'filter_d5' %}" class="genric-btn info-border circle">Info</a>
+                    <a href="{% url 'filter_d6' %}" class="genric-btn info-border circle">Info</a>
+                    <a href="{% url 'filter_d7' %}" class="genric-btn info-border circle">Info</a>
                 </div>
-                </div>
-            </form>
+            </div>
 
 
 			<!--Start Form-->
