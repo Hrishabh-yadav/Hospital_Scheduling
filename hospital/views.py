@@ -125,45 +125,55 @@ DAY_CHOICES = [
     'SUN'
 ]
 
-
-def book_appoint(request, days=0):
+dept  = None
+days = 0
+def book_appoint(request):
     #day1 = DAY_CHOICES[datetime.datetime.today().weekday()]
+    global days, dept
     dayx = addDays(days)
     dayx = DAY_CHOICES[dayx.weekday()]
-    query = Schedule.objects.filter(day=dayx)
+    if dept is not None:
+        query = Schedule.objects.filter(doc__dept__deptid=int(dept) + 1, day=dayx)
+    else:
+        query = Schedule.objects.filter(day=dayx)
     context = {'query': query}
     if request.method == 'POST':
-        dept = request.POST['filter']
-        if dept is not None:
+        if 'filter' in request.POST:
+            dept = request.POST['filter']
             query = Schedule.objects.filter(doc__dept__deptid=int(dept) + 1, day=dayx)
             context = {'query': query}
             return render(request, 'Book_appoint.html', context)
         else:
             return render(request, 'Book_appoint.html', context)
-
     else:
         return render(request, 'Book_appoint.html', context)
 
-
 def filter_d2(request):
-    return book_appoint(request, 1)
-
+    global days
+    days = 1
+    return book_appoint(request)
 
 def filter_d3(request):
-    return book_appoint(request, 2)
-
+    global days
+    days =2
+    return book_appoint(request)
 
 def filter_d4(request):
-    return book_appoint(request, 3)
-
+    global days
+    days = 3
+    return book_appoint(request)
 
 def filter_d5(request):
-    return book_appoint(request, 4)
-
+    global days
+    days = 4
+    return book_appoint(request)
 
 def filter_d6(request):
-    return book_appoint(request, 5)
-
+    global days
+    days = 5
+    return book_appoint(request)
 
 def filter_d7(request):
-    return book_appoint(request, 1)
+    global days
+    days  = 6
+    return book_appoint(request)
