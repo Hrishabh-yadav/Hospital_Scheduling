@@ -14,5 +14,8 @@ urlpatterns = [
     path('filter_d5', views.filter_d5, name="filter_d5"),
     path('filter_d6', views.filter_d6, name="filter_d6"),
     path('filter_d7', views.filter_d7, name="filter_d7"),
+    path('view_appoint', views.view_appoint, name="view_appoint"),
+    path('apply_leave', views.apply_leave, name="apply_leave"),
+    path('view_leave', views.view_leave, name="view_leave"),
     path('^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',views.activate, name='activate'),
 ]

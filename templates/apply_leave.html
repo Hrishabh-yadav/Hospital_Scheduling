@@ -34,7 +34,7 @@
     <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
-      <!-- header-start -->
+    <!-- header-start -->
     {% load static %}
     <header>
         <div class="header-area ">
@@ -52,32 +52,21 @@
                             <div class="main-menu  d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a class="active" href="{% url 'index'  %}">Home</a></li>
+
                                         <!-- only for docs
                                         <li><a class="active" href="Leave.html">Leaves</a></li>
                                         -->
+                                        <li><a class="active" href="{% url 'index' %}">Home</a></li>
                                         {% if user.is_authenticated  %}
                                         <li>< Hello, {{ user.username }}></li>
-                                        <li><a href= {% url 'view_appoint' %}>Booked Appointments</a></li>
+
                                         <li><a href= {% url 'logout' %}>Logout</a></li>
                                         {% else %}
                                         <li><a href= {%  url 'login' %}>Login</a></li>
-                                         <li><a href={% url 'register'  %}>Register</a></li>
                                         {% endif %}
-
-
 
                                     </ul>
                                 </nav>
-                            </div>
-                        </div>
-                        <!-- For employees only.-->
-                        <div class="col-xl-3 col-lg-3 d-none d-lg-block">
-                            <div class="Appointment">
-                                <div class="book_btn d-none d-lg-block">
-                                    <!--for employees-->
-                                    <a href="{% url 'book_appoint' %}">Book an Appointment</a>
-                                </div>
                             </div>
                         </div>
                         <div class="col-12">
@@ -92,158 +81,67 @@
     <!-- Start Align Area -->
 	<div class="whole-wrap">
 		<div class="container box_1170">
+
             {% if user.is_authenticated  %}
-            <h3 class="mb-30"><div style="text-align: center;"> PRESENT SCHEDULE </div></h3>
-
-            <!--Start Form-->
-			<div class="section-top-border">
-				<div class="row">
-                    <form action="book_appoint" method="POST">
-                        {% csrf_token %}
-                        <div class="single-element-widget mt-30">
-                            <div class="default-select" id="default-select"">
-                            <select name = "filter">
-                                <option value="0">Orthopaedics</option>
-                                <option value="1">Gynaecology</option>
-                                <option value="2">ENT</option>
-                                <option value="3">Medicine</option>
-                                <option value="4">Psychology</option>
-                                <option value="5">Dermatology</option>
-
-                            </select>
-                        </div>
-
-                        <br>
-                        <div class="button-group-area mt-40">
-                            <input class="genric-btn info circle" type="submit" value="Filter">
-                        </div>
-						</form>
-					</div>
-				</div>
-			</div>
-			<!--End Form-->
-            <div class="typography">
-                <h2> Day and Date</h2>
-            </div>
-			<div class="section-top-border">
+            <h3 class="mb-30"><div style="text-align: center;"> MY SCHEDULE </div></h3>
+            <div class="section-top-border">
 				<div class="progress-table-wrap">
 					<div class="progress-table">
 						<div class="table-head">
                             <div class="serial"> # </div>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<div class="country">Speciality</div>
-							<div class="country">Doctor Name</div>
+							<div class="country">Day</div>
 							<div class="visit">Shift-1(0800 - 1100)</div>
 							<div class="visit">Shift-2(1300 - 1600)</div>
 							<div class="visit">Shift-3(1800 - 2100)</div>
 						</div>
-                        {% for item in query %}
-						<div class="table-row">
-                            <div class="serial"> {{ forloop.counter }} </div>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<div class="country">{{ item.doc.dept.deptname }} </div>
-							<div class="country"> {{ item.doc.docname }}</div>
-                            {% if item.shift1 == True %}
-							    <div class="visit"> Availaible </div>
-                            {% else %}
-                                <div class="visit"> -/- </div>
-                            {% endif %}
-                            {% if item.shift2 == True %}
-							    <div class="visit"> Availaible </div>
-                            {% else %}
-                                <div class="visit"> -/- </div>
-                            {% endif %}
-                            {% if item.shift3 == True %}
-							    <div class="visit"> Availaible </div>
-                            {% else %}
-                                <div class="visit"> -/- </div>
-                            {% endif %}
-						</div>
-                        {% endfor %}
-
 					</div>
 				</div>
 			</div>
-
-            <!--Table number buttons-->
-            <div style="text-align: center;">
-                <div class="button-group-area mt-10">
-                    <a href="{% url 'filter_d1' %}" class="genric-btn info-border circle">1</a>
-                    <a href="{% url 'filter_d2' %}" class="genric-btn info-border circle">2</a>
-                    <a href="{% url 'filter_d3' %}" class="genric-btn info-border circle">3</a>
-                    <a href="{% url 'filter_d4' %}" class="genric-btn info-border circle">4</a>
-                    <a href="{% url 'filter_d5' %}" class="genric-btn info-border circle">5</a>
-                    <a href="{% url 'filter_d6' %}" class="genric-btn info-border circle">6</a>
-                </div>
-            </div>
-
-
-			<!--Start Form-->
+            <!--Start Form-->
 			<div class="section-top-border">
 				<div class="row">
                     <form action="book" method="POST">
+                        <div class="mt-10">
+                                <h3 class="mb-30">Date of Leave</h3>
+								<input type="date" name="leave_date" placeholder="Date"
+									onfocus="this.placeholder = ''" onblur="this.placeholder = 'Date'" required
+									class="single-input">
+                        </div>
                         <div class="single-element-widget mt-30">
-                            <h3 class="mb-30">Doctor Name</h3>
+                            <h3 class="mb-30">Shift Number</h3>
                             <div class="default-select" id="default-select"">
                                 <select>
-                                    <option value="0">Arooshi Verma</option>
-                                    <option value="1">Av</option>
+                                    <option value="0">Shift-1</option>
+                                    <option value="1">Shift-2</option>
+                                    <option value="2">Shift-3</option>
                                 </select>
                             </div>
-                        </div>
-
-                        <div class="single-element-widget mt-30">
-                            <h3 class="mb-30">Timing</h3>
-                            <div class="default-select" id="default-select"">
-                                <select>
-                                    <option value="0">9:00 - 10:00</option>
-                                    <option value="1">11:00 - 12:00</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="single-element-widget mt-30">
-                            <h3 class="mb-30">Patient Name</h3>
-                            <div class="default-select" id="default-select"">
-                                <select>
-                                    <option value="0">G Verma</option>
-                                    <option value="1">S Verma</option>
-                                </select>
-                            </div>
-                        </div>
-                        <br><br>
-
-                        <div class="switch-wrap d-flex justify-content-between">
-								<p>Consider booking for slot upgrade</p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<div class="confirm-switch">
-									<input type="checkbox" id="confirm-switch" checked>
-									<label for="confirm-switch"></label>
-								</div>
                         </div>
                         <br>
                         <div class="button-group-area mt-40">
-                            <input class="genric-btn info circle" type="submit" value="Book">
+                            <input class="genric-btn info circle" type="submit" value="Apply">
                         </div>
 
 
-						</form>
-					</div>
-				</div>
-			</div>
-			<!--End Form-->
+                    </form>
+                </div>
+            </div>
             {% else %}
                 <br><br><br><br><br><br><br><br><br><br><br>
                 <div style="text-align: center;">
                     <div class="typography">
-
                         <h1> Please Login First</h1>
                     </div>
                 </div>
             {% endif %}
-		</div>
-	</div>
-	<!-- End Align Area -->
- <!-- JS here -->
+
+
+        </div>
+    </div>
+</body>
+
+
+<!-- JS here -->
     {% block extrascripts %}
     <script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
     <script src="{% static 'js/vendor/jquery-1.12.4.min.js' %}"></script>

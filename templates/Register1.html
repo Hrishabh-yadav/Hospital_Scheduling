@@ -49,14 +49,34 @@
                             <div class="main-menu  d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a class="active" href="{% url 'index' %}">Home</a></li>
+                                        <li><a class="active" href="{% url 'index'  %}">Home</a></li>
+                                        {% if user.is_authenticated  %}
+                                        <li>< Hello, {{ user.username }}></li>
+                                        <li><a href= {% url 'view_appoint' %}>Booked Appointments</a></li>
+                                        <li><a href= {% url 'logout' %}>Logout</a></li>
+                                        {% else %}
+                                        <li><a href= {%  url 'login' %}>Login</a></li>
+                                        {% endif %}
                                     </ul>
                                 </nav>
+                            </div>
+                        </div>
+                        {% if user.is_authenticated  %}
+                        <!-- For employees only.-->
+                        <div class="col-xl-3 col-lg-3 d-none d-lg-block">
+                            <div class="Appointment">
+                                <div class="book_btn d-none d-lg-block">
+                                    <!--for employees-->
+                                    <a href="{% url 'book_appoint' %}">Book an Appointment</a>
+                                </div>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="mobile_menu d-block d-lg-none"></div>
                         </div>
+                        {% endif %}
+
+
                     </div>
                 </div>
             </div>
@@ -66,6 +86,15 @@
     <!-- Start Align Area -->
 	<div class="whole-wrap">
 		<div class="container box_1170">
+            {% if user.is_authenticated  %}
+                <br><br><br><br><br><br><br><br><br><br><br>
+                <div style="text-align: center;">
+                    <div class="typography">
+
+                        <h1> You are logged in. Please logout first.</h1>
+                    </div>
+                </div>
+            {% else %}
 			<div class="section-top-border">
 				<div class="row">
 					<div class="col-lg-8 col-md-8">
@@ -106,6 +135,8 @@
 					</div>
 				</div>
 			</div>
+
+            {% endif %}
 		</div>
 	</div>
 

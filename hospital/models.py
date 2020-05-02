@@ -46,7 +46,7 @@ class Employee(models.Model):
 
     empid = models.IntegerField()
     empname = models.CharField(max_length=30)
-    etype = models.CharField(max_length=5, choices = EMP_TYPE_CHOCES, default = 'EXEC')
+    etype = models.CharField(max_length=5, choices=EMP_TYPE_CHOCES, default='EXEC')
     edob = models.DateField()
     gender = models.CharField(max_length=1, choices = GENDER_CHOICES)
     fine = models.BooleanField(default=0)

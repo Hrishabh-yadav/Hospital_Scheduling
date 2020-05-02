@@ -175,5 +175,14 @@ def filter_d6(request):
 
 def filter_d7(request):
     global days
-    days  = 6
+    days=6
     return book_appoint(request)
+
+def view_appoint(request):
+    return render(request, 'view_appoint.html')
+
+def apply_leave(request):
+    return render(request, 'apply_leave.html')
+
+def view_leave(request):
+    return render(request, 'view_leave.html')
