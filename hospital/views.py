@@ -15,9 +15,9 @@ from django.urls import reverse_lazy
 from .models import *
 from datetime import datetime, timedelta
 from django import template
+from random_generator import *
 
 register = template.Library()
-
 @register.filter()
 def addDays(days):
    newDate = datetime.today() + timedelta(days=days)
@@ -83,7 +83,8 @@ def register(request):
             if User.objects.filter(email=email).exists():
                 messages.info(request, 'Email already registered')
                 return redirect('register')
-            user = User.objects.create_user(username=employee_id, password=password1, email=email)
+            user = User.objects.create_user(username=employee_id, password=password1, email=email, )
+            user.last_name = "Employee"
             user.is_active = False
             user.save()
             current_site = get_current_site(request)

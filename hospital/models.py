@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 GENDER_CHOICES = [
     ('F', 'female'),
@@ -46,6 +45,7 @@ class Employee(models.Model):
 
     empid = models.IntegerField()
     empname = models.CharField(max_length=30)
+    empmail = models.EmailField(max_length=254, default = "no_email@gmail.com")
     etype = models.CharField(max_length=5, choices=EMP_TYPE_CHOCES, default='EXEC')
     edob = models.DateField()
     gender = models.CharField(max_length=1, choices = GENDER_CHOICES)
