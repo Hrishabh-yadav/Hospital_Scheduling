@@ -185,18 +185,18 @@
                         <div class="single-element-widget mt-30">
                             <h3 class="mb-30">Doctor Name</h3>
                             <div class="default-select" id="default-select"">
-                                {% for item in query %}
-                                <select>
-                                    <option value=item.doc.docid>{{ item.doc.docname }}</option>
+                                <select name = "DOCTOR_NAME">
+                                    {% for item in query %}
+                                    <option value= {{ item.doc.docid }} >{{ item.doc.docname }}</option>
+                                    {% endfor %}
                                 </select>
-                                {% endfor %}
                             </div>
                         </div>
 
                         <div class="single-element-widget mt-30">
                             <h3 class="mb-30">Timing</h3>
                             <div class="default-select" id="default-select"">
-                                <select>
+                                <select name = "Time">
                                     <option value="0">8:00 - 11:00</option>
                                     <option value="1">13:00 - 16:00</option>
                                     <option value="2">18:00 - 21:00</option>
@@ -207,9 +207,10 @@
                         <div class="single-element-widget mt-30">
                             <h3 class="mb-30">Patient Name</h3>
                             <div class="default-select" id="default-select"">
-                                <select>
-                                    <option value="0">G Verma</option>
-                                    <option value="1">S Verma</option>
+                                <select name = "patient" >
+                                    {%  for i in query2 %}
+                                    <option value= {{ i.depid }}> {{ i.depname }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>

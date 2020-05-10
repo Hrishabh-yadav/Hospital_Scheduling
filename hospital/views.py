@@ -13,12 +13,13 @@ from django.utils import six
 from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
 from .models import *
+from hospital.random_generator import *
 from datetime import datetime, timedelta
 from django import template
-from random_generator import *
 
 register = template.Library()
 @register.filter()
+
 def addDays(days):
    newDate = datetime.today() + timedelta(days=days)
    return newDate
@@ -83,6 +84,9 @@ def register(request):
             if User.objects.filter(email=email).exists():
                 messages.info(request, 'Email already registered')
                 return redirect('register')
+            if len(Employee.objects.filter(empid=employee_id, empmail=email)) == 0:
+                messages.info(request, 'Employee not found')
+                return redirect('register')
             user = User.objects.create_user(username=employee_id, password=password1, email=email, )
             user.last_name = "Employee"
             user.is_active = False
@@ -137,12 +141,18 @@ def book_appoint(request):
         query = Schedule.objects.filter(doc__dept__deptid=int(dept) + 1, day=dayx)
     else:
         query = Schedule.objects.filter(day=dayx)
-    context = {'query': query}
+    val = request.user.username
+    q2 = Employee.objects.filter(empid=int(val))
+    query2 = Dependent.objects.filter(empl=q2[0])
+    context = {'query': query, 'query2': query2}
     if request.method == 'POST':
         if 'filter' in request.POST:
             dept = request.POST['filter']
             query = Schedule.objects.filter(doc__dept__deptid=int(dept) + 1, day=dayx)
-            context = {'query': query}
+            val = request.user.username
+            q2 = Employee.objects.filter(empid = int(val))
+            query2 = Dependent.objects.filter(empl=q2[0])
+            context = {'query': query, 'query2': query2}
             return render(request, 'Book_appoint.html', context)
         else:
             return render(request, 'Book_appoint.html', context)
