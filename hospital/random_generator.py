@@ -6,6 +6,7 @@ import datetime
 def doctors():
     query1 = Doctor.objects.all()
     query2 = Department.objects.all()
+    print(query2, query1)
     l = [i for i in range(1, 100)]
     for i in query1:
         l.remove(i.docid)
@@ -18,7 +19,7 @@ def doctors():
     doc.save()
 
 def employee():
-    EMP_TYPE = ['RET' , 'EXEC','NEXEC' ]
+    EMP_TYPE = ['RET', 'EXEC','NEXEC' ]
     query1 = Employee.objects.all()
     l = [i for i in range(1, 1000)]
     for i in query1:

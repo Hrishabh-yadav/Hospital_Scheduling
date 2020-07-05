@@ -60,10 +60,23 @@ def login(request):
     if request.method == 'POST':
         username = request.POST["username"]
         password = request.POST["password"]
+        type = request.POST['Type']
         user = auth.authenticate(username=username, password=password)
         if user is not None:
-            auth.login(request, user)
-            return redirect("/")
+            if user.last_name == "Employee":
+                if int(type) == 0:
+                    auth.login(request, user)
+                    return redirect("/")
+                else:
+                    messages.info(request, "Wrong Type!")
+                    return redirect('login')
+            else:
+                if int(type) == 1:
+                    auth.login(request, user)
+                    return redirect("/")
+                else:
+                    messages.info(request, "Wrong Type!")
+                    return redirect('login')
         else:
             messages.info(request, "Password or Username invalid!")
             return redirect('login')
