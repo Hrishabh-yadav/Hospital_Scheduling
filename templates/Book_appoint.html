@@ -58,7 +58,11 @@
                                         -->
                                         {% if user.is_authenticated  %}
                                         <li>< Hello, {{ user.username }}></li>
-                                        <li><a href= {% url 'view_appoint' %}>Booked Appointments</a></li>
+                                        {% if user.last_name == "Employee" %}
+                                            <li><a href= {% url 'view_appoint' %}>Booked Appointments</a></li>
+                                        {% else %}
+                                            <li><a href= {% url 'view_leave' %}>Applied Leaves</a></li>
+                                        {% endif %}
                                         <li><a href= {% url 'logout' %}>Logout</a></li>
                                         {% else %}
                                         <li><a href= {%  url 'login' %}>Login</a></li>
@@ -75,8 +79,11 @@
                         <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                             <div class="Appointment">
                                 <div class="book_btn d-none d-lg-block">
-                                    <!--for employees-->
-                                    <a href="{% url 'book_appoint' %}">Book an Appointment</a>
+                                    {% if user.last_name == "Employee" %}
+                                        <a href="{% url 'book_appoint' %}">Book an Appointment</a>
+                                    {% else %}
+                                        <li><a href= {% url 'apply_leave' %}>Apply for a leave</a></li>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -92,7 +99,7 @@
     <!-- Start Align Area -->
 	<div class="whole-wrap">
 		<div class="container box_1170">
-            {% if user.is_authenticated  %}
+            {% if user.is_authenticated and user.last_name == "Employee" %}
             <h3 class="mb-30"><div style="text-align: center;"> PRESENT SCHEDULE </div></h3>
 
             <!--Start Form-->
@@ -101,7 +108,7 @@
                     <form action="book_appoint" method="POST">
                         {% csrf_token %}
                         <div class="single-element-widget mt-30">
-                            <div class="default-select" id="default-select"">
+                            <div class="default-select" id="default-select">
                             <select name = "filter">
                                 <option value="0">Orthopaedics</option>
                                 <option value="1">Gynaecology</option>
@@ -181,11 +188,12 @@
 			<!--Start Form-->
 			<div class="section-top-border">
 				<div class="row">
-                    <form action="book" method="POST">
+                    <form action="book_appoint" method="POST">
+                    {% csrf_token %}
                         <div class="single-element-widget mt-30">
                             <h3 class="mb-30">Doctor Name</h3>
                             <div class="default-select" id="default-select"">
-                                <select name = "DOCTOR_NAME">
+                                <select name = "docId">
                                     {% for item in query %}
                                     <option value= {{ item.doc.docid }} >{{ item.doc.docname }}</option>
                                     {% endfor %}
@@ -194,9 +202,38 @@
                         </div>
 
                         <div class="single-element-widget mt-30">
+                            <h3 class="mb-30">Date</h3>
+                            <div class="default-select" id="default-select"">
+                                <select name = "date">
+                                    {% for item in DateList1 %}
+                                        <option value= 1 >{{ item }}</option>
+                                    {% endfor %}
+                                    {% for item in DateList2 %}
+                                        <option value= 2 >{{ item }}</option>
+                                    {% endfor %}
+                                    {% for item in DateList3 %}
+                                        <option value= 3 >{{ item }}</option>
+                                    {% endfor %}
+                                    {% for item in DateList4 %}
+                                        <option value= 4 >{{ item }}</option>
+                                    {% endfor %}
+                                    {% for item in DateList5 %}
+                                        <option value= 5 >{{ item }}</option>
+                                    {% endfor %}
+                                    {% for item in DateList6 %}
+                                        <option value= 6 >{{ item }}</option>
+                                    {% endfor %}
+                                    {% for item in DateList7 %}
+                                        <option value= 7 >{{ item }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="single-element-widget mt-30">
                             <h3 class="mb-30">Timing</h3>
                             <div class="default-select" id="default-select"">
-                                <select name = "Time">
+                                <select name = "time">
                                     <option value="0">8:00 - 11:00</option>
                                     <option value="1">13:00 - 16:00</option>
                                     <option value="2">18:00 - 21:00</option>
@@ -206,7 +243,7 @@
 
                         <div class="single-element-widget mt-30">
                             <h3 class="mb-30">Patient Name</h3>
-                            <div class="default-select" id="default-select"">
+                            <div class="default-select" id="default-select">
                                 <select name = "patient" >
                                     {%  for i in query2 %}
                                     <option value= {{ i.depid }}> {{ i.depname }}</option>
@@ -219,13 +256,13 @@
                         <div class="switch-wrap d-flex justify-content-between">
 								<p>Consider booking for slot upgrade</p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<div class="confirm-switch">
-									<input type="checkbox" id="confirm-switch" checked>
+									<input type="checkbox" id="confirm-switch" name="upgrade" checked>
 									<label for="confirm-switch"></label>
 								</div>
                         </div>
                         <br>
                         <div class="button-group-area mt-40">
-                            <input class="genric-btn info circle" type="submit" value="Book">
+                            <input class="genric-btn info circle" type="submit" value="submit">
                         </div>
 
 

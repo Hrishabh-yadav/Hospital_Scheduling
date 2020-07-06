@@ -74,29 +74,27 @@
 		<div class="container box_1170">
 			<div class="section-top-border">
 				<div class="row">
-					<div class="col-lg-8 col-md-8">
-						<h3 class="mb-30">Login</h3>
-						<form action="login" method="POST">
-                            {% csrf_token %}
-							<div class="mt-10">
-								<input type="text" name="username" placeholder="username"
-									onfocus="this.placeholder = ''" onblur="this.placeholder = 'userame'" required
-									class="single-input">
-							</div>
-							<div class="mt-10">
-								<input type="password" name="password" placeholder="password"
-									onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'" required
-									class="single-input">
-							</div>
-							<div class="single-element-widget mt-30">
-								<div class="default-select" id="default-select"">
-									<select name = "Type">
-										<option value="0">Employee</option>
-										<option value="1">Doctor</option>
-									</select>
-								</div>
-							</div>
-							<div class="mt-10">
+                    <h3 class="mb-30">Login</h3>
+                    <form action="login" method="POST">
+                        {% csrf_token %}
+                        <div class="mt-10">
+                            <input type="text" name="username" placeholder="username"
+                                   onfocus="this.placeholder = ''" onblur="this.placeholder = 'userame'" required
+                                   class="single-input">
+                        </div>
+                        <div class="mt-10">
+                            <input type="password" name="password" placeholder="password"
+                                   onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'" required
+                                   class="single-input">
+                        </div>
+                        <div class="single-element-widget mt-30">
+                            <div class="default-select" id="default-select"">
+                            <select name = "Type">
+                                <option value="0">Employee</option>
+                                <option value="1">Doctor</option>
+                            </select>
+                        </div>
+                        <div class="mt-10">
 								<input type="submit" value="submit">
 							</div>
 							

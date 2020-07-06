@@ -10,6 +10,7 @@ from django.contrib.auth.models import User, auth
 from django.core.mail import EmailMessage
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils import six
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
 from .models import *
@@ -142,11 +143,46 @@ DAY_CHOICES = [
     'SAT',
     'SUN'
 ]
+DAY_CHOICES2= [
+    'MONDAY',
+    'TUESDAY',
+    'WEDNESDAY',
+    'THURSDAY',
+    'FRIDAY',
+    'SATURDAY',
+    'SUNDAY'
+]
 
-dept  = None
+
+DateHelp = {
+    "January" : "1",
+    "February" : "2",
+    "March" : "3",
+    "April" : "4",
+    "May" : "5",
+    "June" : "6",
+    "July" : "7",
+    "August" : "8",
+    "September" : "9",
+    "October" : "10",
+    "November" : "11",
+    "December" : "12"
+}
+
+dept = None
 days = 0
 def book_appoint(request):
     #day1 = DAY_CHOICES[datetime.datetime.today().weekday()]
+
+    DateList1 = [(datetime.today() + timedelta(days=0)).date(), ];
+    DateList2 = [(datetime.today() + timedelta(days=1)).date(), ];
+    DateList3 = [(datetime.today() + timedelta(days=2)).date(), ];
+    DateList4 = [(datetime.today() + timedelta(days=3)).date(), ];
+    DateList5 = [(datetime.today() + timedelta(days=4)).date(), ];
+    DateList6 = [(datetime.today() + timedelta(days=5)).date(), ];
+    DateList7 = [(datetime.today() + timedelta(days=6)).date(), ];
+
+    specialMessage = [];
     global days, dept
     dayx = addDays(days)
     dayx = DAY_CHOICES[dayx.weekday()]
@@ -154,23 +190,82 @@ def book_appoint(request):
         query = Schedule.objects.filter(doc__dept__deptid=int(dept) + 1, day=dayx)
     else:
         query = Schedule.objects.filter(day=dayx)
-    val = request.user.username
-    q2 = Employee.objects.filter(empid=int(val))
-    query2 = Dependent.objects.filter(empl=q2[0])
-    context = {'query': query, 'query2': query2}
+    context = {}
+    if(request.user.is_authenticated):
+        val = request.user.username
+        q2 = Employee.objects.filter(empid=int(val))
+        query2 = Dependent.objects.filter(empl=q2[0])
+        context = {'query': query, 'query2': query2,'DateList1': DateList1, 'DateList2': DateList2, 'DateList3': DateList3,'DateList4': DateList4, 'DateList5': DateList5, 'DateList6': DateList6, 'DateList7': DateList7}
     if request.method == 'POST':
         if 'filter' in request.POST:
             dept = request.POST['filter']
             query = Schedule.objects.filter(doc__dept__deptid=int(dept) + 1, day=dayx)
             val = request.user.username
             q2 = Employee.objects.filter(empid = int(val))
-            query2 = Dependent.objects.filter(empl=q2[0])
-            context = {'query': query, 'query2': query2}
+            query2 = Dependent.objects.filter(empl = int(q2[0]))
+            context = {'query': query, 'query2': query2, 'DateList1': DateList1, 'DateList2': DateList2, 'DateList3': DateList3,'DateList4': DateList4, 'DateList5': DateList5, 'DateList6': DateList6, 'DateList7': DateList7}
             return render(request, 'Book_appoint.html', context)
+
+        elif 'docId' in request.POST:
+            #print(request.POST)
+            DateList = [];
+            for i in range(7):
+                DateList.append(datetime.today() + timedelta(days=i))
+
+            patient = request.POST['patient']
+
+            adateindex = request.POST['date']
+            adate = datetime.today() + timedelta(days=int(adateindex) - 1)
+
+            shift = int(request.POST['time']) + 1
+            print("shift ", shift)
+            docId = request.POST['docId']
+            doctor = Doctor.objects.filter(docid=docId)
+
+            isUpgradable = request.POST['upgrade']
+
+            empl = request.user.username
+
+            patient_id = ""
+            dep = Dependent.objects.filter(empl=empl)
+
+            for item in dep:
+                patient_id = empl + "D" + str(item.depid)
+
+            sched = Schedule.objects.filter(doc__docid=docId, day=DAY_CHOICES[adate.weekday()])
+            if(len(sched) == 0):
+                messages.info(request, "Doctor not availaible for this date")
+                return redirect('book_appoint')
+            for i in sched.values():
+                print(i)
+            #print(sched.filter(shift1=True) is None);
+            if shift == 1 and sched.filter(shift1=True) is None:
+                messages.info(request, "Doctor not availaible for shift 1")
+                return redirect('book_appoint')
+            elif shift == 2 and sched.filter(shift2=True) is None:
+                messages.info(request, "Doctor not availaible for shift 2")
+                return redirect('book_appoint')
+            elif shift == 3 and sched.filter(shift3=True) is None:
+                messages.info(request, "Doctor not availaible for shift 3")
+                return redirect('book_appoint')
+
+            if (Appointment.objects.filter(p_id=patient_id, sched=sched[0], adate=adate)) is not None:
+                messages.info(request, "You have already booked this slot for this patient")
+                return redirect('book_appoint')
+            
+            appt = Appointment.objects.create(p_id=patient_id, sched=sched[0], adate=adate, shift=shift)
+
+
+
+            #print(appt.adate, appt.p_id, appt.sched, appt.shift)
+            appt.save()
+
+            return render(request, 'view_appoint.html')
         else:
             return render(request, 'Book_appoint.html', context)
     else:
         return render(request, 'Book_appoint.html', context)
+
 
 def filter_d2(request):
     global days
@@ -210,3 +305,4 @@ def apply_leave(request):
 
 def view_leave(request):
     return render(request, 'view_leave.html')
+

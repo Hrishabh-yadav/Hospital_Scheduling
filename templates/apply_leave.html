@@ -82,7 +82,7 @@
 	<div class="whole-wrap">
 		<div class="container box_1170">
 
-            {% if user.is_authenticated  %}
+            {% if user.is_authenticated and user.last_name == "Employee"  %}
             <h3 class="mb-30"><div style="text-align: center;"> MY SCHEDULE </div></h3>
             <div class="section-top-border">
 				<div class="progress-table-wrap">

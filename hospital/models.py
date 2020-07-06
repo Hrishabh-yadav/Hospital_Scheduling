@@ -60,14 +60,11 @@ class Dependent(models.Model):
     depgender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     empl = models.ForeignKey("Employee", on_delete=models.CASCADE)
 
-class Patient(models.Model):
-    patid = models.IntegerField()
-    is_employee = models.BooleanField()
-    emp = models.ForeignKey("Employee", on_delete=models.CASCADE)
-    dep = models.ForeignKey("Dependent", on_delete=models.CASCADE)
+
 
 class Appointment(models.Model):
     adate = models.DateField()
     sched = models.ForeignKey("Schedule", on_delete=models.CASCADE)
-    p_id = models.ForeignKey("Patient", on_delete=models.CASCADE)
+    p_id = models.CharField(max_length=30)
+    shift = models.IntegerField()
 
