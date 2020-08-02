@@ -130,15 +130,23 @@
 				<div class="progress-table-wrap">
 					<div class="progress-table">
 						<div class="table-head">
-                            <div class="serial"> # </div>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<div class="country">Appointment date</div>
+                            <div class="serial"> #</div>
+							<div class="country"> Appointment date  </div>
 							<div class="country">Time Slot</div>
 							<div class="visit">Speciality</div>
                             <div class="visit">Doctor Name</div>
 							<div class="visit">Patient Name</div>
-							<div class="visit">Status</div>
 						</div>
+                        {% for item in query %}
+						<div class="table-row">
+                            <div class="serial"> {{ forloop.counter }} </div>
+							<div class="country">{{item.adate}} </div>
+							<div class="country"> {{item.time}}</div>
+                            <div class="country"> {{item.doc.dept.deptname}}</div>
+                            <div class="visit"> {{item.doc.docname}}</div>
+                            <div class="visit"> {{item.patient.depname}}</div>
+						</div>
+                        {% endfor %}
 					</div>
 				</div>
 			</div>

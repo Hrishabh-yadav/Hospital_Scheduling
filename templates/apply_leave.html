@@ -82,7 +82,7 @@
 	<div class="whole-wrap">
 		<div class="container box_1170">
 
-            {% if user.is_authenticated and user.last_name == "Employee"  %}
+            {% if user.is_authenticated and user.last_name != "Employee"  %}
             <h3 class="mb-30"><div style="text-align: center;"> MY SCHEDULE </div></h3>
             <div class="section-top-border">
 				<div class="progress-table-wrap">
@@ -94,13 +94,36 @@
 							<div class="visit">Shift-2(1300 - 1600)</div>
 							<div class="visit">Shift-3(1800 - 2100)</div>
 						</div>
+                        {% for item in query %}
+						<div class="table-row">
+                            <div class="serial"> {{ forloop.counter }} </div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<div class="country">{{ item.day }} </div>
+							{% if item.shift1 == True %}
+							    <div class="visit"> Availaible </div>
+                            {% else %}
+                                <div class="visit"> -/- </div>
+                            {% endif %}
+                            {% if item.shift2 == True %}
+							    <div class="visit"> Availaible </div>
+                            {% else %}
+                                <div class="visit"> -/- </div>
+                            {% endif %}
+                            {% if item.shift3 == True %}
+							    <div class="visit"> Availaible </div>
+                            {% else %}
+                                <div class="visit"> -/- </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
 					</div>
 				</div>
 			</div>
             <!--Start Form-->
 			<div class="section-top-border">
 				<div class="row">
-                    <form action="book" method="POST">
+                    <form action="apply_leave" method="POST">
+                        {% csrf_token %}
                         <div class="mt-10">
                                 <h3 class="mb-30">Date of Leave</h3>
 								<input type="date" name="leave_date" placeholder="Date"
@@ -110,7 +133,7 @@
                         <div class="single-element-widget mt-30">
                             <h3 class="mb-30">Shift Number</h3>
                             <div class="default-select" id="default-select"">
-                                <select>
+                                <select name="Shift">
                                     <option value="0">Shift-1</option>
                                     <option value="1">Shift-2</option>
                                     <option value="2">Shift-3</option>
