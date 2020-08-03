@@ -29,7 +29,6 @@
     <link rel="stylesheet" href=" {% static 'css/style.css' %}">
     <!-- <link rel="stylesheet" href=" {% static 'css/responsive.css' %}"> -->
 </head>
-
 <body>
     <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
@@ -58,7 +57,7 @@
                                         -->
                                         {% if user.is_authenticated  %}
                                         <li>< Hello, {{ user.username }}></li>
-                                        <li><a href= {% url 'view_leave' %}>View Leave</a></li>
+                                        <li><a href= {% url 'view_appoint' %}>Booked Appointments</a></li>
                                         <li><a href= {% url 'logout' %}>Logout</a></li>
                                         {% else %}
                                         <li><a href= {%  url 'login' %}>Login</a></li>
@@ -77,7 +76,7 @@
                             <div class="Appointment">
                                 <div class="book_btn d-none d-lg-block">
                                     <!--for employees-->
-                                    <a href="{% url 'apply_leave' %}">Apply For Leave</a>
+                                    <a href="{% url 'book_appoint' %}">Book an Appointment</a>
                                 </div>
                             </div>
                         </div>
@@ -93,55 +92,31 @@
     <!-- header-end -->
     <!-- Start Align Area -->
 	<div class="whole-wrap">
-		<div class="container box_1170">
-
-            {% if user.is_authenticated  %}
-            <div class="typography">
-                <h2> Applied Leaves</h2>
-            </div>
-
+        <div class="container box_1170">
+            <!--Start Form-->
 			<div class="section-top-border">
-				<div class="progress-table-wrap">
-					<div class="progress-table">
-						<div class="table-head">
-                            <div class="serial"> # </div> &nbsp &nbsp &nbsp &nbsp
-							<div class="country">Date</div>
-							<div class="country">Shift#</div>
-							<div class="visit">Status</div>
-						</div>
-                        {% for item in query %}
-						<div class="table-row">
-                            <div class="serial"> {{ forloop.counter }} </div>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<div class="country">{{ item.date }} </div>
-							{% if item.Shift == 0 %}
-							    <div class="visit"> First </div>
-                            {% endif %}
-                            {% if item.Shift == 1 %}
-							    <div class="visit"> Second </div>
-                            {% endif %}
-                            {% if item.Shift == 2 %}
-							    <div class="visit"> Third </div>
-                            {% endif %}
-                            &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-                            <div class="visit">Approved </div>
+				<div class="row">
+                    <form action="book_appoint" method="POST">
+                    {% csrf_token %}
+                        <div class="single-element-widget mt-30">
+                            <h3 class="mb-30">Doctor Name</h3>
+                            <div class="default-select" id="default-select"">
+                                <select name = "docId">
+                                    {% for item in query %}
+                                    <option value= {{ item.appointment }} >{{ item.appointment }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
                         </div>
-                        {% endfor %}
+                        <div class="button-group-area mt-40">
+                            <input class="genric-btn info circle" type="submit" value="submit">
+                        </div>
+						</form>
 					</div>
 				</div>
 			</div>
-            {% else %}
-                <br><br><br><br><br><br><br><br><br><br><br>
-                <div style="text-align: center;">
-                    <div class="typography">
-                        <h1> Please Login First</h1>
-                    </div>
-                </div>
-            {% endif %}
+			<!--End Form-->
 
-
-        </div>
-    </div>
 </body>
 
 

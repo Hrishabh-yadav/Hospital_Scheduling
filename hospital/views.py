@@ -281,8 +281,24 @@ def book_appoint(request):
 def view_appoint(request):
     empid = int(request.user.username)
     query = Appointments.objects.filter(empl__empid=empid)
-    context = {'query': query}
-
+    query1 = Appointments.objects.filter(empl__empid=empid).distinct('doc__docid')
+    query2 = Dependent.objects.filter(empl__empid=int(request.user.username))
+    context = {'query': query, 'query1': query1, 'query2': query2}
+    if request.method == 'POST':
+        if 'docId' in request.POST:
+            docid = int(request.POST['docId'])
+            date1 = request.POST['appoint_date']
+            year, month, day = map(int, date1.split('-'))
+            date1 = date(year, month, day)
+            shift = int(request.POST['time']) + 1
+            depid = int(request.POST['patient'])
+            query4 = Appointments.objects.filter(doc__docid=docid, adate=date1, shift=shift, patient__depid=depid)
+            Appointments.objects.filter(doc__docid=docid, adate=date1, shift=shift, patient__depid=depid).delete()
+            query = Leave.objects.filter(date__gt=date.today())
+            query1 = Doctor.objects.all()
+            query2 = Dependent.objects.filter(empl__empid=int(request.user.username))
+            context = {'query': query, 'query1': query1, 'query2': query2}
+            return render(request, 'view_appoint.html', context)
     return render(request, 'view_appoint.html', context)
 
 def mail(query):
@@ -426,9 +442,7 @@ def filter_d7(request):
     return book_appoint(request)
 
 
-
 def view_leave(request):
-
-    query1 = Leave.objects.filter(date__gt=date.today())
-    context = { 'query' : query1}
+    query = Leave.objects.filter(date__gt=date.today())
+    context = {'query', query}
     return render(request, 'view_leave.html', context)
