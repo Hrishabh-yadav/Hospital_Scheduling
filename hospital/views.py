@@ -195,7 +195,10 @@ def book_appoint(request):
     DateList7 = [(datetime.today() + timedelta(days=6)).date(), ]
     global days, dept
     dayx = addDays(days)
+    str1 = str(dayx.date())
     dayx = DAY_CHOICES[dayx.weekday()]
+    str2 = str(dayx)
+    print(str1)
     if dept is not None:
         query = Schedule.objects.filter(doc__dept__deptid=int(dept) + 1, day=dayx)
     else:
@@ -207,7 +210,7 @@ def book_appoint(request):
         query2 = Dependent.objects.filter(empl__empid=int(val))
         context = {'query': query, 'query2': query2, 'DateList1': DateList1, 'DateList2': DateList2,
                    'DateList3': DateList3, 'DateList4': DateList4, 'DateList5': DateList5, 'DateList6': DateList6,
-                   'DateList7': DateList7}
+                   'DateList7': DateList7, 'str1': str1, 'str2':str2}
     if request.method == 'POST':
         if 'filter' in request.POST:
             dept = request.POST['filter']
@@ -217,7 +220,7 @@ def book_appoint(request):
             query2 = Dependent.objects.filter(empl=q2[0])
             context = {'query': query, 'query2': query2, 'DateList1': DateList1, 'DateList2': DateList2,
                        'DateList3': DateList3, 'DateList4': DateList4, 'DateList5': DateList5, 'DateList6': DateList6,
-                       'DateList7': DateList7}
+                       'DateList7': DateList7, 'str1': str1, 'str2':str2}
             return render(request, 'Book_appoint.html', context)
 
         elif 'docId' in request.POST:
@@ -241,20 +244,20 @@ def book_appoint(request):
             if len(sched) == 0:
                 messages.info(request, "Doctor not availaible for this date")
                 return render(request, 'Book_appoint.html', context)
-            if shift == 1 and sched.filter(shift1=True) is None:
+            if shift == 1 and len(sched.filter(shift1=True))  == 0:
                 messages.info(request, "Doctor not availaible for shift 1")
                 print("Doctor not availaible for shift 1")
                 return render(request, 'Book_appoint.html', context)
-            elif shift == 2 and sched.filter(shift2=True) is None:
+            elif shift == 2 and len(sched.filter(shift2=True)) == 0:
                 messages.info(request, "Doctor not availaible for shift 2")
                 print("Doctor not availaible for shift 2")
                 return render(request, 'Book_appoint.html', context)
-            elif shift == 3 and sched.filter(shift3=True) is None:
+            elif shift == 3 and len(sched.filter(shift3=True)) == 0:
                 messages.info(request, "Doctor not availaible for shift 3")
                 print("Doctor not availaible for shift 3")
                 return render(request, 'Book_appoint.html', context)
             if len(Leave.objects.filter(doc__docid=docId, date=adate, Shift=shift-1)) > 0:
-                messages.info(request, "Doctor not availaible for shift 3")
+                messages.info(request, "Doctor not availaible for particular shift")
                 print("Doctor not availaible for shift" + str(shift))
                 return render(request, 'Book_appoint.html', context)
             appoinments = Appointments.objects.filter(doc__docid=docId, adate=adate, shift=shift)
@@ -271,7 +274,7 @@ def book_appoint(request):
                                               slot=(len(appoinments) + 1))
             appt.save()
 
-            return render(request, 'view_appoint.html', context)
+            return render(request, 'Book_appoint.html', context)
         else:
             return render(request, 'Book_appoint.html', context)
     else:
@@ -443,6 +446,7 @@ def filter_d7(request):
 
 
 def view_leave(request):
-    query = Leave.objects.filter(date__gt=date.today())
-    context = {'query', query}
+    docid = int(request.user.username.strip("doc"))
+    query = Leave.objects.filter(doc__docid=docid, date__gt=date.today())
+    context = {'query': query}
     return render(request, 'view_leave.html', context)

@@ -137,7 +137,7 @@
 					<div class="progress-table">
 						<div class="table-head">
                             <div class="serial"> # </div>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs
 							<div class="country">Speciality</div>
 							<div class="country">Doctor Name</div>
 							<div class="visit">Shift-1(0800 - 1100)</div>
@@ -185,11 +185,17 @@
                 </div>
             </div>
 
-
 			<!--Start Form-->
 			<div class="section-top-border">
 				<div class="row">
                     <form action="book_appoint" method="POST">
+                     {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
                     {% csrf_token %}
                         <div class="single-element-widget mt-30">
                             <h3 class="mb-30">Doctor Name</h3>
